@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowsy.EventSourcing.Sql", "Flowsy.EventSourcing.Sql\Flowsy.EventSourcing.Sql.csproj", "{D33F6779-45A2-4E64-BF3A-19AB07E9E15D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{A23E5297-9EAC-4CD1-B42A-BC4697C116DA}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		publish.sh = publish.sh
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D33F6779-45A2-4E64-BF3A-19AB07E9E15D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D33F6779-45A2-4E64-BF3A-19AB07E9E15D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D33F6779-45A2-4E64-BF3A-19AB07E9E15D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D33F6779-45A2-4E64-BF3A-19AB07E9E15D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
