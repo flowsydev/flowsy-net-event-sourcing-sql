@@ -82,19 +82,19 @@ using Flowsy.EventSourcing.Sql;
 public class ShoppingCartDbEventStore : DbEventStore<ShoppingCartEvent>, IShoppingCartEventStore
 {
     // Create the event store with factory to get database connections from 
-    public DbEventStore(IDbConnectionFactory dbConnectionFactory)
+    public ShoppingCartDbEventStore(IDbConnectionFactory dbConnectionFactory)
         : base(dbConnectionFactory)
     {
     }
     
     // Create the event store with a database connection
-    public DbEventStore(IDbConnection dbConnection)
+    public ShoppingCartDbEventStore(IDbConnection dbConnection)
         : base(dbConnection)
     {
     }
 
     // Create the event store with a database transaction
-    public DbEventStore(IDbTransaction dbTransaction)
+    public ShoppingCartDbEventStore(IDbTransaction dbTransaction)
         : base(dbTransaction)
     {
     }
@@ -108,19 +108,19 @@ public class ShoppingCartDbEventStore : DbEventStore<ShoppingCartEvent>, IShoppi
 public class ProductDbEventStore : DbEventStore<ProductEvent>, IProductEventStore
 {
     // Create the event store with factory to get database connections from 
-    public DbEventStore(IDbConnectionFactory dbConnectionFactory)
+    public ProductDbEventStore(IDbConnectionFactory dbConnectionFactory)
         : base(dbConnectionFactory)
     {
     }
     
     // Create the event store with a database connection
-    public DbEventStore(IDbConnection dbConnection)
+    public ProductDbEventStore(IDbConnection dbConnection)
         : base(dbConnection)
     {
     }
 
     // Create the event store with a database transaction
-    public DbEventStore(IDbTransaction dbTransaction)
+    public ProductDbEventStore(IDbTransaction dbTransaction)
         : base(dbTransaction)
     {
     }
