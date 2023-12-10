@@ -1,25 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>Flowsy.EventSourcing.Sql</RootNamespace>
-        <LangVersion>11</LangVersion>
+        <LangVersion>12</LangVersion>
 
         <Title>Flowsy Event Sourcing Sql</Title>
         <Description>
-            SQL implementation for event sourcing patterns.
+            Event sourcing patterns powered by a SQL database.
         </Description>
 
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/flowsydev/flowsy-net-event-sourcing-sql</RepositoryUrl>
 
-        <PackageVersion>0.1.1</PackageVersion>
+        <PackageVersion>1.0.0</PackageVersion>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
 
         <NoWarn>$(NoWarn);NU5118;NU5128</NoWarn>
+
+        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
@@ -27,11 +28,9 @@
     </ItemGroup>
     
     <ItemGroup>
-        <PackageReference Include="Dapper" Version="2.1.15" />
-        <PackageReference Include="Flowsy.Db.Abstractions" Version="0.1.1" />
-        <PackageReference Include="Flowsy.EventSourcing.Abstractions" Version="0.2.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-        <PackageReference Include="System.Text.Json" Version="7.0.3" />
+        <PackageReference Include="Flowsy.EventSourcing.Abstractions" Version="1.1.0" />
+        <PackageReference Include="Marten" Version="6.4.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     </ItemGroup>
     
     <ItemGroup>
