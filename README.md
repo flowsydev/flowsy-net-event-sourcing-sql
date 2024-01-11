@@ -1,6 +1,6 @@
 # Flowsy Event Sourcing Sql
 
-This package uses **Marten** to provide an implementation of the **IAggregateRepository** interface defined in the
+This package uses **Marten** to provide an implementation of the **IEventRepository** interface defined in the
 **Flowsy.EventSourcing.Abstractions** package using PostgreSQL as the underlying event store.
 
 To learn the concepts of **Flowsy.EventSourcing.Abstractions** and how to configure **Marten**, read their corresponding documentations:
