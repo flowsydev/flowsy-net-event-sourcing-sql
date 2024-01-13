@@ -74,10 +74,17 @@ public class EventRepository : IEventRepository
 
     public virtual Task<TEventSource?> LoadAsync<TEventSource>(
         string id,
-        long? fromVersion,
-        long? toVersion,
-        DateTimeOffset? timestamp,
+        Action<TEventSource> configure,
         CancellationToken cancellationToken
+        ) where TEventSource : class, IEventSource
+        => LoadAsync(id, null, null, null, configure, cancellationToken);
+
+    public virtual Task<TEventSource?> LoadAsync<TEventSource>(
+        string id,
+        long? fromVersion = null,
+        long? toVersion = null,
+        DateTimeOffset? timestamp = null,
+        CancellationToken cancellationToken = default
         ) where TEventSource : class, IEventSource
         => _documentSession.Events.AggregateStreamAsync<TEventSource>(
             id,
@@ -86,4 +93,27 @@ public class EventRepository : IEventRepository
             fromVersion: fromVersion ?? 0,
             token: cancellationToken
             );
+
+    public virtual async Task<TEventSource?> LoadAsync<TEventSource>(
+        string id,
+        long? fromVersion = null,
+        long? toVersion = null,
+        DateTimeOffset? timestamp = null,
+        Action<TEventSource>? configure = null,
+        CancellationToken cancellationToken = default
+        ) where TEventSource : class, IEventSource
+    {
+        var eventSource = await _documentSession.Events.AggregateStreamAsync<TEventSource>(
+            id,
+            version: toVersion ?? 0,
+            timestamp: timestamp,
+            fromVersion: fromVersion ?? 0,
+            token: cancellationToken
+            );
+        
+        if (eventSource is not null && configure is not null)
+            configure(eventSource);
+        
+        return eventSource;
+    }
 }
