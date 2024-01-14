@@ -98,5 +98,17 @@ namespace Flowsy.EventSourcing.Sql.Resources {
                 return ResourceManager.GetString("InvalidEventTimestamp", resourceCulture);
             }
         }
+        
+        internal static string PersistenceOperationActiveMustBeCompleted {
+            get {
+                return ResourceManager.GetString("PersistenceOperationActiveMustBeCompleted", resourceCulture);
+            }
+        }
+        
+        internal static string PersistenceOperationMustBeStartedAndEventsMustBeStored {
+            get {
+                return ResourceManager.GetString("PersistenceOperationMustBeStartedAndEventsMustBeStored", resourceCulture);
+            }
+        }
     }
 }

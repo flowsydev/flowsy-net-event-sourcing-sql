@@ -45,4 +45,10 @@
     <data name="InvalidEventTimestamp" xml:space="preserve">
         <value>Invalid event timestamp: {0}.</value>
     </data>
+    <data name="PersistenceOperationActiveMustBeCompleted" xml:space="preserve">
+        <value>A persistence operation is active and must be completed before beginning a new one.</value>
+    </data>
+    <data name="PersistenceOperationMustBeStartedAndEventsMustBeStored" xml:space="preserve">
+        <value>A persistence operation must be started and events must be stored before saving changes.</value>
+    </data>
 </root>

@@ -1,4 +1,5 @@
 using Flowsy.EventSourcing.Abstractions;
+using Flowsy.EventSourcing.Sql.Resources;
 using Marten;
 
 namespace Flowsy.EventSourcing.Sql;
@@ -7,9 +8,16 @@ public class EventRepository : IEventRepository
 {
     private readonly IDocumentSession _documentSession;
     private readonly IEventPublisher? _eventPublisher;
+    private bool _deferringPersistence;
+    private readonly List<IEventSource> _deferredEventSources = [];
     private bool _disposed;
 
-    public EventRepository(IDocumentSession documentSession, IEventPublisher? eventPublisher)
+    public EventRepository(IDocumentSession documentSession)
+    {
+        _documentSession = documentSession;
+    }
+    
+    public EventRepository(IDocumentSession documentSession, IEventPublisher eventPublisher)
     {
         _documentSession = documentSession;
         _eventPublisher = eventPublisher;
@@ -46,8 +54,16 @@ public class EventRepository : IEventRepository
         Dispose(false);
         GC.SuppressFinalize(this);
     }
-
-    public virtual async Task StoreAsync<TEventSource>(
+    
+    public void BeginPersistence()
+    {
+        if (_deferringPersistence)
+            throw new InvalidOperationException(Strings.PersistenceOperationActiveMustBeCompleted);
+        
+        _deferringPersistence = true;
+    }
+    
+    public async Task StoreAsync<TEventSource>(
         TEventSource eventSource,
         CancellationToken cancellationToken
         ) where TEventSource : class, IEventSource
@@ -58,12 +74,36 @@ public class EventRepository : IEventRepository
             _documentSession.Events.StartStream<TEventSource>(eventSource.Id, events);
         else
             _documentSession.Events.Append(eventSource.Id, eventSource.Version, events);
+
+        if (_deferringPersistence)
+        {
+            _deferredEventSources.Add(eventSource);
+            return;
+        }
+        
+        await _documentSession.SaveChangesAsync(cancellationToken);
+        _eventPublisher?.PublishAndForget(eventSource);
+        eventSource.Flush();
+    }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        if (!_deferringPersistence || _deferredEventSources.Count == 0)
+            throw new InvalidOperationException(Strings.PersistenceOperationMustBeStartedAndEventsMustBeStored);
         
         await _documentSession.SaveChangesAsync(cancellationToken);
         
-        _eventPublisher?.PublishAndForget(eventSource);
+        var events = _deferredEventSources
+            .SelectMany(es => es.Events)
+            .OrderBy(e => e.InitiationInstant);
         
-        eventSource.Flush();
+        _eventPublisher?.PublishAndForget(events);
+        
+        foreach (var eventSource in _deferredEventSources)
+            eventSource.Flush();
+        
+        _deferredEventSources.Clear();
+        _deferringPersistence = false;
     }
 
     public virtual Task<TEventSource?> LoadAsync<TEventSource>(

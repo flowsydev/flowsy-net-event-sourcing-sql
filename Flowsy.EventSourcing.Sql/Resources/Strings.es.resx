@@ -38,4 +38,10 @@
     <data name="InvalidEventTimestamp" xml:space="preserve">
         <value>Marca de tiempo no válida para el evento: {0}.</value>
     </data>
+    <data name="PersistenceOperationActiveMustBeCompleted" xml:space="preserve">
+        <value>Una operación de persistencia está activa y debe completarse antes de iniciar una nueva.</value>
+    </data>
+    <data name="PersistenceOperationMustBeStartedAndEventsMustBeStored" xml:space="preserve">
+        <value>Es necesario iniciar una operación de persistencia y almacenar eventos antes de guardar cambios.</value>
+    </data>
 </root>
