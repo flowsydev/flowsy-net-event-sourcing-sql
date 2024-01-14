@@ -14,7 +14,7 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/flowsydev/flowsy-net-event-sourcing-sql</RepositoryUrl>
 
-        <PackageVersion>2.2.0</PackageVersion>
+        <PackageVersion>2.2.1</PackageVersion>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
 

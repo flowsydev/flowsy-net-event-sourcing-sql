@@ -88,8 +88,14 @@ public class EventRepository : IEventRepository
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken)
     {
-        if (!_deferringPersistence || _deferredEventSources.Count == 0)
+        if (!_deferringPersistence)
             throw new InvalidOperationException(Strings.PersistenceOperationMustBeStartedAndEventsMustBeStored);
+        
+        if (_deferredEventSources.Count == 0)
+        {
+            _deferringPersistence = false;
+            return;
+        }
         
         await _documentSession.SaveChangesAsync(cancellationToken);
         
